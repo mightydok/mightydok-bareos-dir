@@ -74,15 +74,18 @@
         mode: 0750
     notify: restart bareos-dir
 
+- debug:
+        var: mightydok_bareos_dir_storage_servers
+
 # Copy storage servers templates
--   name: Create storage servers config files
+-   name: Create bareos-director config files
     template:
-        src: templates/storage_server.conf.j2
-        dest: /etc/bareos/bareos-dir.d/storage/{{ item.name }}.conf
+        src: "{{ item }}"
+        dest: /etc/bareos/bareos-dir.d/{{ item | basename | regex_replace('\.conf.j2','') }}/ansible.conf
         owner: bareos
         group: bareos
         mode: 0750
-    with_items: "{{ mightydok_bareos_dir_storage_servers }}"
+    with_fileglob: ../templates/bareos/*.j2
     notify: restart bareos-dir
 
 # Autostart bareos-dir

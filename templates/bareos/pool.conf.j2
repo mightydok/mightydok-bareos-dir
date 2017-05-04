@@ -1,0 +1,18 @@
+# {{ ansible_managed }}
+#
+
+{% for pool in mightydok_bareos_dir_pool %}
+
+Pool {
+  Name = {{ pool.name }}
+  Pool Type = Backup
+  Recycle = yes                       # Bareos can automatically recycle Volumes
+  AutoPrune = yes                     # Prune expired volumes
+  Volume Retention = {{ pool.volume_retention}}         # How long should the Full Backups be kept? (#06)
+  Maximum Volume Bytes = {{ pool.maximum_volume_bytes }}          # Limit Volume size to something reasonable
+  Maximum Volumes = {{ pool.maximum_volumes }}               # Limit number of Volumes in Pool
+  Label Format = "{{ pool.label_format }}"              # Volumes will be labeled "Full-<volume-id>"
+  Use Volume Once = yes
+}
+
+{% endfor %}

@@ -1,0 +1,21 @@
+# {{ ansible_managed }}
+#
+
+{% for job in mightydok_bareos_dir_jobdefs %}
+
+JobDefs {
+  Name = "{{ job.name }}"
+  Type = Backup
+  Level = "{{ job.level }}"
+  Schedule = "{{ job.schedule }}"
+  Storage = "{{ job.storage }}"
+  Messages = Standard
+  Pool = "{{ job.pool }}"
+  Priority = 10
+  Write Bootstrap = "/var/lib/bareos/%c.bsr"
+  Full Backup Pool = "{{ job.full_backup_pool }}"                  # write Full Backups into "Full" Pool         (#05)
+  Differential Backup Pool = "{{ job.diff_backup_pool }}"  # write Diff Backups into "Differential" Pool (#08)
+  Incremental Backup Pool = "{{ job.inc_backup_pool }}"    # write Incr Backups into "Incremental" Pool  (#11)
+}
+
+{% endfor %}

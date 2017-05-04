@@ -1,0 +1,15 @@
+# {{ ansible_managed }}
+#
+
+{% for client in mightydok_bareos_dir_client %}
+
+Client {
+  Name = "{{ client.name }}"
+  Description = ""
+  Address = "{{ client.address }}"
+  Password = "{{ client.password | default('{{ mightydok_bareos_dir_default_client_pass }}') }}"
+  FDPort = "{{ client.fdport | default('9102')}}"
+  AutoPrune = yes
+}
+
+{% endfor %}

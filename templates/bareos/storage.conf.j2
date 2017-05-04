@@ -1,0 +1,13 @@
+# {{ ansible_managed }}
+#
+
+{% for server in mightydok_bareos_dir_storage %}
+
+Storage {
+  Name = "{{ server.name }}"
+  Address = "{{ server.address }}"                # N.B. Use a fully qualified name here (do not use "localhost" here).
+  Password = "{{ server.password }}"
+  Device = "{{ server.device }}"
+  Media Type = File
+}
+{% endfor %}

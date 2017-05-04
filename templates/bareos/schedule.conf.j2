@@ -1,0 +1,13 @@
+# {{ ansible_managed }}
+#
+
+{% for schedule in mightydok_bareos_dir_schedule %}
+
+Schedule {
+  Name = "{{ schedule.name }}"
+  {% for rule in schedule.run %}
+  Run = {{ rule }}
+  {% endfor %}
+}
+
+{% endfor %}

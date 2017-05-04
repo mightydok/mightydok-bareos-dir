@@ -1,0 +1,14 @@
+# {{ ansible_managed }}
+#
+
+{% for job in mightydok_bareos_dir_job %}
+
+Job {
+  Name = "{{ job.name }}"
+  JobDefs = "{{ job.jobdefs }}"
+  Client = "{{ job.client }}"
+  FileSet = "{{ job.fileset }}"
+  Storage = "{{ job.storage }}"
+}
+
+{% endfor %}

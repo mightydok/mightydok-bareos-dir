@@ -13,10 +13,78 @@ mightydok_bareos_dir_packages:
 mightydok_bareos_dir_db_pass: ""
 mightydok_bareos_dir_webui_admin_pass: ""
 mightydok_bareos_dir_bconsole_pass: ""
+mightydok_bareos_dir_default_client_pass: ""
 
 # Bareos Director settings
 mightydok_bareos_dir_maximum_concurrent_jobs: 10
 
-# List of storage servers
-mightydok_bareos_dir_storage_servers:
-    - { name: "", address: "", password: "", device: "" }
+# List of bareos dir vars
+# catalog
+# client
+# console
+# counter
+# director
+# fileset
+# job
+# jobdefs
+# messages
+# pool
+# profile
+# schedule
+# storage
+
+mightydok_bareos_dir_client:
+    - name: "localhost"
+      address: ""
+      password: ""
+      fdport: "9102"
+
+mightydok_bareos_dir_fileset:
+    - name: "AnsibleDefaultFileset"
+      include:
+        - "/"
+      exclude:
+        - "/var/lib/bareos"
+        - "/var/lib/bareos/storage"
+        - "/proc"
+        - "/tmp"
+        - "/var/tmp"
+        - "/.journal"
+        - "/.fsck"
+
+mightydok_bareos_dir_job:
+    - name: "AnsibleDefaultClient"
+      jobdefs: "AnsibleDefaultJob"
+      client: "localhost"
+      fileset: "AnsibleDefaultFileset"
+      storage: "localhost"
+
+mightydok_bareos_dir_jobdefs:
+    - name: "AnsibleDefaultJob"
+      level: "Incremental"
+      schedule: "WeeklyCycle"
+      storage: "File"
+      pool: "Incremental"
+      full_backup_pool: "Full"
+      diff_backup_pool: "Differential"
+      inc_backup_pool: "Incremental"
+
+mightydok_bareos_dir_pool:
+    - name: "AnsibleDefaultPool"
+      volume_retention: "1 month"
+      maximum_volume_bytes: "0"
+      maximum_volumes: "0"
+      label_format: "AnDefPool-"
+
+mightydok_bareos_dir_schedule:
+    - name: "AnsibleDefaultWeeklyCycle"
+      run:
+        - "Full 1st sat at 21:00"
+        - "Differential 2nd-5th sat at 21:00"
+        - "Incremental mon-fri at 21:00"
+
+mightydok_bareos_dir_storage:
+    - name: "localhost"
+      address: "localhost"
+      password: ""
+      device: "AnsibleFile"
