@@ -1,2 +1,81 @@
 ---
 # tasks file for mightydok-bareos-dir
+
+# Add bareos repo key
+-   name: Add Bareos repository key
+    apt_key:
+        url: "http://download.bareos.org/bareos/release/latest/xUbuntu_16.04/Release.key"
+        state: present
+
+# Add bareos repo
+-   name: Add Bareos repository
+    apt_repository:
+        repo: deb http://download.bareos.org/bareos/release/latest/xUbuntu_16.04/ /
+        state: present
+
+# Install bareos-director packages
+-   name: Install bareos-director pakages, bconsole and webui
+    apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+    with_items: "{{ mightydok_bareos_dir_packages }}"
+    notify: restart apache2
+
+# Check if database already installed
+-   name: Check if Version table exist
+    script: files/check_db.sh
+    register: check_db
+    changed_when: False
+    ignore_errors: yes
+
+# Install database data for bareos
+-   name: Create bareos tables
+    command: /usr/lib/bareos/scripts/make_bareos_tables
+    when: check_db.rc == 1
+
+# Copy MyCatalog.conf template
+-   name: Copy MyCatalog.conf template
+    template:
+        src: templates/MyCatalog.conf.j2
+        dest: /etc/bareos/bareos-dir.d/catalog/MyCatalog.conf
+        owner: bareos
+        group: bareos
+        mode: 0750
+    notify: restart bareos-dir
+
+# Copy webui_admin.conf template
+-   name: Copy webui_admin.conf template
+    template:
+        src: templates/webui_admin.conf.j2
+        dest: /etc/bareos/bareos-dir.d/console/admin.conf
+        owner: bareos
+        group: bareos
+        mode: 0750
+    notify: restart bareos-dir
+
+# Copy bconsole.conf template
+-   name: Copy bconsole.conf template
+    template:
+        src: templates/bconsole.conf.j2
+        dest: /etc/bareos/bconsole.conf
+        owner: bareos
+        group: bareos
+        mode: 0640
+    notify: restart bareos-dir
+
+# Copy bconsole.conf template
+-   name: Copy bareos-dir.conf template
+    template:
+        src: templates/bareos-dir.conf.j2
+        dest: /etc/bareos/bareos-dir.d/director/bareos-dir.conf
+        owner: bareos
+        group: bareos
+        mode: 0750
+    notify: restart bareos-dir
+
+# Autostart bareos-dir
+-   name: Ensure bareos-dir autorun
+    service:
+        name: bareos-dir
+        enabled: yes

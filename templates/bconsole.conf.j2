@@ -1,0 +1,12 @@
+# {{ ansible_managed }}
+#
+#
+# Bareos User Agent (or Console) Configuration File
+#
+
+Director {
+  Name = bareos-dir
+  address = localhost
+  Password = "{{ mightydok_bareos_dir_bconsole_pass }}"
+  Description = "Bareos Console credentials for local Director"
+}

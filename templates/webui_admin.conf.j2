@@ -1,0 +1,9 @@
+# {{ ansible_managed }}
+#
+# Restricted console used by bareos-webui
+#
+Console {
+  Name = admin
+  Password = "{{ mightydok_bareos_dir_webui_admin_pass }}"
+  Profile = "webui-admin"
+}

@@ -1,0 +1,10 @@
+# {{ ansible_managed }}
+#
+
+catalog {
+  Name = MyCatalog
+  dbuser = bareos
+  dbname = bareos
+  dbdriver = mysql
+  dbpassword = {{ mightydok_bareos_dir_db_pass }}
+}

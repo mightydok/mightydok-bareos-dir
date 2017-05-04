@@ -1,2 +1,17 @@
 ---
 # defaults file for mightydok-bareos-dir
+
+# List of bareos director packages
+mightydok_bareos_dir_packages:
+    - bareos-database-mysql
+    - bareos-director
+    - bareos-bconsole
+    - bareos-webui
+
+# Bareos Director pass
+mightydok_bareos_dir_db_pass: ""
+mightydok_bareos_dir_webui_admin_pass: ""
+mightydok_bareos_dir_bconsole_pass: ""
+
+# Bareos Director settings
+mightydok_bareos_dir_maximum_concurrent_jobs: 10

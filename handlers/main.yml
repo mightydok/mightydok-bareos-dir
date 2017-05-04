@@ -1,2 +1,12 @@
 ---
 # handlers file for mightydok-bareos-dir
+
+-   name: restart bareos-dir
+    service:
+        name: bareos-dir
+        state: restarted
+
+-   name: restart apache2
+    service:
+        name: apache2
+        state: restarted
