@@ -19,6 +19,7 @@
         name: "{{ item }}"
         state: present
         update_cache: yes
+        cache_valid_time: 3600
     with_items: "{{ mightydok_bareos_dir_packages }}"
     notify: restart apache2
 
@@ -73,9 +74,6 @@
         group: bareos
         mode: 0750
     notify: restart bareos-dir
-
-- debug:
-        var: mightydok_bareos_dir_storage_servers
 
 # Copy storage servers templates
 -   name: Create bareos-director config files
