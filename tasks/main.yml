@@ -74,6 +74,17 @@
         mode: 0750
     notify: restart bareos-dir
 
+# Copy storage servers templates
+-   name: Create storage servers config files
+    template:
+        src: templates/storage_server.conf.j2
+        dest: /etc/bareos/bareos-dir.d/storage/{{ item.name }}.conf
+        owner: bareos
+        group: bareos
+        mode: 0750
+    with_items: "{{ mightydok_bareos_dir_storage_servers }}"
+    notify: restart bareos-dir
+
 # Autostart bareos-dir
 -   name: Ensure bareos-dir autorun
     service:

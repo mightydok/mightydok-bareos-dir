@@ -7,6 +7,7 @@ mightydok_bareos_dir_packages:
     - bareos-director
     - bareos-bconsole
     - bareos-webui
+    - bareos-tools
 
 # Bareos Director pass
 mightydok_bareos_dir_db_pass: ""
@@ -15,3 +16,7 @@ mightydok_bareos_dir_bconsole_pass: ""
 
 # Bareos Director settings
 mightydok_bareos_dir_maximum_concurrent_jobs: 10
+
+# List of storage servers
+mightydok_bareos_dir_storage_servers:
+    - { name: "", address: "", password: "", device: "" }
