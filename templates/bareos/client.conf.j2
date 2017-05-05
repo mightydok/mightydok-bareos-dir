@@ -4,7 +4,7 @@
 {% for client in mightydok_bareos_dir_client %}
 
 Client {
-  Name = "{{ client.name }}"
+  Name = "{{ client.name }}-fd"
   Description = ""
   Address = "{{ client.address }}"
   Password = "{{ client.password | default('{{ mightydok_bareos_dir_default_client_pass }}') }}"

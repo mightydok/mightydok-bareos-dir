@@ -12,7 +12,7 @@ Pool {
   Maximum Volume Bytes = {{ pool.maximum_volume_bytes }}          # Limit Volume size to something reasonable
   Maximum Volumes = {{ pool.maximum_volumes }}               # Limit number of Volumes in Pool
   Label Format = "{{ pool.label_format }}"              # Volumes will be labeled "Full-<volume-id>"
-  Use Volume Once = yes
+  Maximum Volume Jobs = 1
 }
 
 {% endfor %}
