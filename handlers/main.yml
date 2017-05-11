@@ -10,3 +10,8 @@
     service:
         name: apache2
         state: restarted
+
+-   name: reload bareos-dir
+    service:
+        name: bareos-dir
+        state: reloaded

@@ -53,7 +53,7 @@
         owner: bareos
         group: bareos
         mode: 0750
-    notify: restart bareos-dir
+    notify: reload bareos-dir
 
 # Copy bconsole.conf template
 -   name: Copy bconsole.conf template
@@ -63,7 +63,7 @@
         owner: bareos
         group: bareos
         mode: 0640
-    notify: restart bareos-dir
+    notify: reload bareos-dir
 
 # Copy bconsole.conf template
 -   name: Copy bareos-dir.conf template
@@ -73,7 +73,7 @@
         owner: bareos
         group: bareos
         mode: 0750
-    notify: restart bareos-dir
+    notify: reload bareos-dir
 
 # Copy storage servers templates
 -   name: Create bareos-director config files
@@ -84,7 +84,7 @@
         group: bareos
         mode: 0750
     with_fileglob: ../templates/bareos/*.j2
-    notify: restart bareos-dir
+    notify: reload bareos-dir
 
 # Autostart bareos-dir
 -   name: Ensure bareos-dir autorun
