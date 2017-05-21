@@ -87,7 +87,7 @@
     notify: reload bareos-dir
 
 # Remove default jobs
--   name: Remove default job for bacula-fd
+-   name: Remove default settings file
     file:
         path: "{{ item }}"
         state: absent
@@ -96,6 +96,8 @@
         - /etc/bareos/bareos-dir.d/job/BackupCatalog.conf
         - /etc/bareos/bareos-dir.d/client/bareos-fd.conf
         - /etc/bareos/bareos-dir.d/job/RestoreFiles.conf
+        - /etc/bareos/bareos-dir.d/jobdefs/DefaultJob.conf
+        - /etc/bareos/bareos-dir.d/storage/File.conf
     notify: reload bareos-dir
 
 # Autostart bareos-dir

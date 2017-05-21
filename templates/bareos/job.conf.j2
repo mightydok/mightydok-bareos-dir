@@ -11,7 +11,7 @@ Job {
   Level = Full
   FileSet = "Catalog"
   Schedule = "WeeklyCycleAfterBackup"
-  Client = "localhost"
+  Client = "localhost-fd"
 
   # This creates an ASCII copy of the catalog
   # Arguments to make_catalog_backup.pl are:
@@ -31,7 +31,7 @@ Job {
   Name = "RestoreFiles"
   Description = "Standard Restore template. Only one such job is needed for all standard Jobs/Clients/Storage ..."
   Type = Restore
-  Client = localhost
+  Client = "localhost-fd"
   FileSet = "AnsibleDefaultFileset"
   Storage = LocalOpt
   Pool = Incremental
