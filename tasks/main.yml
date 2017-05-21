@@ -95,6 +95,7 @@
         - /etc/bareos/bareos-dir.d/job/backup-bareos-fd.conf
         - /etc/bareos/bareos-dir.d/job/BackupCatalog.conf
         - /etc/bareos/bareos-dir.d/client/bareos-fd.conf
+        - /etc/bareos/bareos-dir.d/job/RestoreFiles.conf
     notify: reload bareos-dir
 
 # Autostart bareos-dir

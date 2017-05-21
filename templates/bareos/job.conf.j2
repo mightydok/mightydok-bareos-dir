@@ -26,6 +26,19 @@ Job {
   Write Bootstrap = "|/usr/bin/bsmtp -h localhost -f \"\(Bareos\) \" -s \"Bootstrap for Job %j\" root@localhost" # (#01)
   Priority = 11                   # run after main backup
 }
+
+Job {
+  Name = "RestoreFiles"
+  Description = "Standard Restore template. Only one such job is needed for all standard Jobs/Clients/Storage ..."
+  Type = Restore
+  Client = localhost
+  FileSet = "AnsibleDefaultFileset"
+  Storage = LocalOpt
+  Pool = Incremental
+  Messages = Standard
+  Where = /tmp/bareos-restores
+}
+
 # END
 
 {% for job in mightydok_bareos_dir_job %}
