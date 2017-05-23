@@ -53,6 +53,28 @@ mightydok_bareos_dir_fileset:
         - "/.fsck"
 
 mightydok_bareos_dir_job:
+    # Default job for Catalog Backup
+    - name: "AnsibleBackupCatalog"
+      jobdefs: "AnsibleDefaultJob"
+      client: "localhost"
+      fileset: "Catalog"
+      storage: "localhost"
+      level: Full
+      schedule: "WeeklyCycleAfterBackup"
+      runbeforejob: "/usr/lib/bareos/scripts/make_catalog_backup.pl MyCatalog"
+      runafterjob: "/usr/lib/bareos/scripts/delete_catalog_backup"
+      write_bootstrap: "|/usr/bin/bsmtp -h localhost -f \"\(Bareos\) \" -s \"Bootstrap for Job %j\" root@localhost"
+      priority: "11"
+    # Default Restore job
+    - name: "AnsibleRestoreFiles"
+      jobdefs: "AnsibleDefaultJob"
+      client: "localhost"
+      fileset: "AnsibleDefaultFileset"
+      storage: "localhost"
+      type: "Restore"
+      pool: "Incremental"
+      where: "/tmp/bareos-restores"
+    # Default job
     - name: "AnsibleDefaultClient"
       jobdefs: "AnsibleDefaultJob"
       client: "localhost"

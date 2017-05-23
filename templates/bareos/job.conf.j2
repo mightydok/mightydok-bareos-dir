@@ -1,46 +1,6 @@
 # {{ ansible_managed }}
 #
 
-# Add job for backp catalog
-# TODO: Rewrite
-
-Job {
-  Name = "AnsibleBackupCatalog"
-  Description = "Backup the catalog database (after the nightly save)"
-  JobDefs = "AnsibleDefaultJob"
-  Level = Full
-  FileSet = "Catalog"
-  Schedule = "WeeklyCycleAfterBackup"
-  Client = "{{ mightydok_bareos_fd_name | default(ansible_fqdn) }}-fd"
-
-  # This creates an ASCII copy of the catalog
-  # Arguments to make_catalog_backup.pl are:
-  #  make_catalog_backup.pl <catalog-name>
-  RunBeforeJob = "/usr/lib/bareos/scripts/make_catalog_backup.pl MyCatalog"
-
-  # This deletes the copy of the catalog
-  RunAfterJob  = "/usr/lib/bareos/scripts/delete_catalog_backup"
-
-  # This sends the bootstrap via mail for disaster recovery.
-  # Should be sent to another system, please change recipient accordingly
-  Write Bootstrap = "|/usr/bin/bsmtp -h localhost -f \"\(Bareos\) \" -s \"Bootstrap for Job %j\" root@localhost" # (#01)
-  Priority = 11                   # run after main backup
-}
-
-Job {
-  Name = "RestoreFiles"
-  Description = "Standard Restore template. Only one such job is needed for all standard Jobs/Clients/Storage ..."
-  Type = Restore
-  Client = "{{ mightydok_bareos_fd_name | default(ansible_fqdn) }}-fd"
-  FileSet = "AnsibleDefaultFileset"
-  Storage = LocalOpt
-  Pool = Incremental
-  Messages = Standard
-  Where = /tmp/bareos-restores
-}
-
-# END
-
 {% for job in mightydok_bareos_dir_job %}
 
 Job {
@@ -49,6 +9,16 @@ Job {
   Client = "{{ job.client }}-fd"
   FileSet = "{{ job.fileset }}"
   Storage = "{{ job.storage }}"
+  Level = "{{ job.level | default(omit) }}"
+  Schedule = "{{ job.schedule | default(omit) }}"
+  RunBeforeJob = "{{ job.runbeforejob | default(omit) }}"
+  RunAfterJob = "{{ job.runafterjob | default(omit) }}"
+  Write Bootstrap = = "{{ job.write_bootstrap | default(omit) }}"
+  Priority = "{{ job.priority | default(omit) }}"
+  Type = "{{ job.type | default(omit) }}"
+  Pool = "{{ job.pool | default(omit) }}"
+  Messages = "{{ job.messages | default(omit) }}"
+  Where = "{{ job.where | default(omit) }}"
 }
 
 {% endfor %}
