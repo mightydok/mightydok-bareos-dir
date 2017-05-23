@@ -63,7 +63,7 @@ mightydok_bareos_dir_job:
       schedule: "WeeklyCycleAfterBackup"
       runbeforejob: "/usr/lib/bareos/scripts/make_catalog_backup.pl MyCatalog"
       runafterjob: "/usr/lib/bareos/scripts/delete_catalog_backup"
-      write_bootstrap: "|/usr/bin/bsmtp -h localhost -f \"\(Bareos\) \" -s \"Bootstrap for Job %j\" root@localhost"
+      write_bootstrap: '|/usr/bin/bsmtp -h localhost -f \"\(Bareos\) \" -s \"Bootstrap for Job %j\" root@localhost'
       priority: "11"
     # Default Restore job
     - name: "AnsibleRestoreFiles"
