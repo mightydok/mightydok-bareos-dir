@@ -9,16 +9,36 @@ Job {
   Client = "{{ job.client }}-fd"
   FileSet = "{{ job.fileset }}"
   Storage = "{{ job.storage }}"
-  Level = "{{ job.level | default(omit) }}"
-  Schedule = "{{ job.schedule | default(omit) }}"
-  RunBeforeJob = "{{ job.runbeforejob | default(omit) }}"
-  RunAfterJob = "{{ job.runafterjob | default(omit) }}"
-  Write Bootstrap = = "{{ job.write_bootstrap | default(omit) }}"
-  Priority = "{{ job.priority | default(omit) }}"
-  Type = "{{ job.type | default(omit) }}"
-  Pool = "{{ job.pool | default(omit) }}"
-  Messages = "{{ job.messages | default(omit) }}"
-  Where = "{{ job.where | default(omit) }}"
+{% if job.level is defined %}
+  Level = "{{ job.level }}"
+{% endif %}
+{% if job.schedule is defined %}
+  Schedule = "{{ job.schedule }}"
+{% endif %}
+{% if job.runbeforejob is defined %}
+  RunBeforeJob = "{{ job.runbeforejob }}"
+{% endif %}
+{% if job.runafterjob is defined %}
+  RunAfterJob = "{{ job.runafterjob }}"
+{% endif %}
+{% if job.write_bootstrap is defined %}
+  Write Bootstrap = "{{ job.write_bootstrap }}"
+{% endif %}
+{% if job.priority is defined %}
+  Priority = "{{ job.priority }}"
+{% endif %}
+{% if job.type is defined %}
+  Type = "{{ job.type }}"
+{% endif %}
+{% if job.pool is defined %}
+  Pool = "{{ job.pool }}"
+{% endif %}
+{% if job.messages is defined %}
+  Messages = "{{ job.messages }}"
+{% endif %}
+{% if job.where is defined %}
+  Where = "{{ job.where }}"
+{% endif %}
 }
 
 {% endfor %}
