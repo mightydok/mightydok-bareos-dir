@@ -5,7 +5,9 @@
 
 Job {
   Name = "{{ job.name }}"
+{% if job.jobdefs is defined %}
   JobDefs = "{{ job.jobdefs }}"
+{% endif %}
   Client = "{{ job.client }}-fd"
   FileSet = "{{ job.fileset }}"
   Storage = "{{ job.storage }}"
